@@ -1,9 +1,64 @@
+body {  
+  background-image: url("https://images.alphacoders.com/515/thumb-1920-515344.jpg");
+  /* background-image: url("assets/images/mario-world-bg.jpg"); */
+  background-size: cover;
+	background-repeat: no-repeat;
+  min-height: 600px;
+  min-width: 800px;
+}
+
+
 #character-list .col {
   padding: 5px 5px;
 }
-.card-body {
+.card {
+  background: rgba(142, 245, 24, 0.6);
+}
+.card-body, .card-header, .card-footer {
   padding: 0px 0px;
 }
 .card-body img {
   max-height: 80px;
 }
+
+.grayimg {
+  -webkit-filter: grayscale(1); /* Webkit */
+  filter: gray; /* IE6-9 */
+  filter: grayscale(1); /* W3C */
+}
+
+#playground {
+  padding-top: 15px;
+  padding-bottom: 15px;
+
+  height: 400px;
+  background-color: rgba(245, 245, 18, 0.349);
+  
+}
+
+#playground #player-left, #playground #player-right {
+  width: 30vw;
+  height: 30vh;;
+}
+#playground #player-left img, #playground #player-right img{
+  max-height: 320px;
+  max-width: 200px;
+}
+
+.player-left-stat, .player-right-stat {
+  height: 10vh;
+}
+
+#player-left-hp-bar, #player-right-hp-bar {
+  background-color: green;
+  width: 100%;
+  top: 0vw;
+  left: 0;
+  height: 1vw;
+  /* position: absolute; */
+  border: 1px solid black;
+}
+
+/* .btn-danger, .btn-danger:hover {
+  color: rgb(222, 222, 222);
+} */
