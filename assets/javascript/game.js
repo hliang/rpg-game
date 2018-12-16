@@ -59,9 +59,11 @@ $(document).ready(function () {
         console.log("defender hp=" + defender.hp + " attack=" + defender.attackPower + " backfire=" + defender.counterPower);
         // attack
         defender.hp -= offender.attackPower;
+        $("#gameinfo-msg").html($("<p>").text(offender.name + " hits for " + offender.attackPower + " damage."));
         offender.attackPower += 2;
         // counter attack
         offender.hp -= defender.counterPower;
+        $("#gameinfo-msg").append($("<p>").text(defender.name + " hits for " + defender.attackPower + " damage."));
         console.log("counter-attack");
         console.log("offender hp=" + offender.hp + " attack=" + offender.attackPower + " backfire=" + offender.counterPower);
         console.log("defender hp=" + defender.hp + " attack=" + defender.attackPower + " backfire=" + defender.counterPower);
@@ -83,6 +85,7 @@ $(document).ready(function () {
                 // ask user to restart, everything should go back to initial state. maybe just refresh the page?
                 $("#btn-fight").hide()
                 $("#btn-restart").show();
+                $("#gameinfo-msg").append($("<p>").text(player.name + " is defeated... GAME OVER!!!"));
             }
         } else if (player.position == "right") {
             $("#player-right-stat").html(hp);
@@ -90,6 +93,9 @@ $(document).ready(function () {
             // if character is dead 
             if (player.hp <= 0) {
                 $("#player-right .player img").addClass("grayimg");
+                $("#"+player.name).removeClass("card-enemy");
+                $("#"+player.name).addClass("card-defeated");
+                $("#gameinfo-msg").append($("<p>").text(player.name + " is defeated."));
                 playerRight = null;
                 // asked user to pick new enemy
                 if (playerLeft.hp > 0) {
@@ -124,21 +130,29 @@ $(document).ready(function () {
 
     // place selected character on the playground
     $("#character-list .card").on("click", function () {
+        if ($(this).find("img").hasClass("grayimg")) {
+            console.log("character not available");
+            return;
+        }
         if (playerLeft == null) { // first player
             // character stat
             var playerStat = $('<div/>', { id: "player-left-stat" });
-            playerStat.append($('<div/>', { id: "player-left-hp-bar" })); // hp
+            // playerStat.append($('<div/>', { id: "player-left-hp-bar" })); // hp
             // console.log(playerStat.html());
             $("#player-left .player").html(playerStat);
 
             // $("#character-list .card img").removeClass("grayimg");
             $("#player-left .player").append($(this).find("img").clone());
             $(this).find("img").addClass("grayimg");
+            $(".card").addClass("card-enemy");
+            $(this).removeClass("card-enemy");
+            $(this).addClass("card-player");
 
             // set playerLeft
             var varname = $(this).find(".card-header").text().toLowerCase();
             playerLeft = eval(varname);
             playerLeft.position = "left";
+            updateStat(playerLeft);
 
             // prompt to pick enemy
             $("#btn-p1").hide();
@@ -146,7 +160,7 @@ $(document).ready(function () {
         } else if (playerRight == null && playerLeft.hp > 0) { // second player
             // character stat
             var playerStat = $('<div/>', { id: "player-right-stat" });
-            playerStat.append($('<div/>', { id: "player-right-hp-bar" })); // hp
+            // playerStat.append($('<div/>', { id: "player-right-hp-bar" })); // hp
             // console.log(playerStat.html());
             $("#player-right .player").html(playerStat);
 
@@ -158,10 +172,14 @@ $(document).ready(function () {
             var varname = $(this).find(".card-header").text().toLowerCase();
             playerRight = eval(varname);
             playerRight.position = "right";
+            updateStat(playerRight);
 
             // ready to fight
             $("#btn-p2").hide();
             $("#btn-fight").show();
+
+            // clear gameinfo-msg, if there is any
+            $("#gameinfo-msg").empty();
         }  
     });
 
@@ -178,8 +196,8 @@ $(document).ready(function () {
             $("#player-left .player img").animate({top: '-=10px'}, 1000);
             // $("#logo").animate({top: '+=1vh'}, 1000);
             attack(playerLeft, playerRight);
-            updateStat(playerLeft);
             updateStat(playerRight);
+            updateStat(playerLeft);
         } else {
             console.log("one player already dead");
         }

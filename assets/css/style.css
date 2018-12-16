@@ -8,23 +8,38 @@ body {
 }
 
 header h1 {
+  padding-top: 10px;
+  padding-bottom: 10px;
   color: rgb(252, 178, 42);
-  text-shadow: 2px 2px 0px #53dd28, 6px 6px 2px #000000 ;
+  text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white, 3px 3px 0px #52663d, 6px 6px 2px #000000 ;
+  /* text-shadow: 2px 2px 0px #52663d, 6px 6px 2px #000000 ; */
   font-family: 'Carter One', 'Acme', sans-serif;;
 }
 
 #character-list {
   font-family: 'Acme', sans-serif;
-  color: white;
-  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  color: #000;
+  text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
 }
 
 #character-list .col {
   padding: 5px 5px;
 }
 .card {
-  background: rgba(142, 245, 24, 0.6);
+  /* background: rgba(142, 245, 24, 0.6); */
+  background: rgba(7, 163, 255, 0.45);
   max-width: 100px;
+}
+.card-defeated {
+  background: rgba(60, 60, 60, 0.45);
+}
+.card-player, #player-left-stat {
+  /* background: rgba(142, 245, 24, 0.6); */
+  background: rgba(7, 163, 255, 0.45);
+}
+.card-enemy, #player-right-stat {
+  /* border: 1px solid rgba(255, 0, 0, 0.225); */
+  background: rgba(235, 124, 84, 0.45);
 }
 .card-body, .card-header, .card-footer {
   padding: 0px 0px;
@@ -64,11 +79,31 @@ header h1 {
 
 #player-left-stat, #player-right-stat {
   height: 10vh;
-  background: rgba(196, 245, 105, 0.533);
   border-radius: 4px;
 
   font-family: 'Acme', sans-serif;
   color: black;
+  text-shadow: 2px 0 0 #ddd, -2px 0 0 #ddd, 0 2px 0 #ddd, 0 -2px 0 #ddd, 1px 1px #ddd, -1px -1px 0 #ddd, 1px -1px 0 #ddd, -1px 1px 0 #ddd;
+
+  padding-top: 0.3em;
+  padding-bottom: 0.3em;
+}
+
+#gameinfo {
+  height: 80%;
+  background: rgba(196, 245, 105, 0.533);
+  border-radius: 4px;
+  padding: 10px 10px;
+  font-family: 'Acme', sans-serif;
+  font-size: 150%;
+  /* color: rgb(80, 82, 7); */
+  color: #8BC34A;
+  text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+  /* text-shadow: -2px 0 rgb(0, 0, 0), 0 2px black, 2px 0 black, 0 -2px black; */
+}
+
+#player-left-stat p, #player-right-stat p, #gameinfo-msg p {
+  margin-bottom: 0em;
 }
 
 #player-left-hp-bar, #player-right-hp-bar {
@@ -80,6 +115,11 @@ header h1 {
   /* position: absolute; */
   border: 1px solid black;
 }
+
+/* #gameinfo-msg .panel-body {
+  border: 2px solid red;
+  border-radius: 4px;
+} */
 
 /* .btn-danger, .btn-danger:hover {
   color: rgb(222, 222, 222);
