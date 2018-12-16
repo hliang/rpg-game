@@ -59,11 +59,11 @@ $(document).ready(function () {
         console.log("defender hp=" + defender.hp + " attack=" + defender.attackPower + " backfire=" + defender.counterPower);
         // attack
         defender.hp -= offender.attackPower;
-        $("#gameinfo-msg").html($("<p>").text(offender.name + " hits for " + offender.attackPower + " damage."));
+        $("#gameinfo-msg").html($("<p>").text(offender.name + " hits for " + offender.attackPower + " damage ⇨"));
         offender.attackPower += 2;
         // counter attack
         offender.hp -= defender.counterPower;
-        $("#gameinfo-msg").append($("<p>").text(defender.name + " hits for " + defender.attackPower + " damage."));
+        $("#gameinfo-msg").append($("<p>").text("⇦ " + defender.name + " hits for " + defender.attackPower + " damage"));
         console.log("counter-attack");
         console.log("offender hp=" + offender.hp + " attack=" + offender.attackPower + " backfire=" + offender.counterPower);
         console.log("defender hp=" + defender.hp + " attack=" + defender.attackPower + " backfire=" + defender.counterPower);

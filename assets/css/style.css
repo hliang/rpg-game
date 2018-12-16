@@ -1,6 +1,7 @@
 body {  
-  background-image: url("https://images.alphacoders.com/515/thumb-1920-515344.jpg");
-  /* background-image: url("assets/images/mario-world-bg.jpg"); */
+  /* background-image: url("https://images.alphacoders.com/515/thumb-1920-515344.jpg"); */
+  background-image: url("../images/mario-world-bg.jpg");
+  background-color: #abc79b; /* Used if the image is unavailable */
   background-size: cover;
 	background-repeat: no-repeat;
   min-height: 600px;
