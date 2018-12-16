@@ -81,6 +81,8 @@ $(document).ready(function () {
                 $("#player-left .player img").addClass("grayimg");
                 // playerLeft = null;
                 // ask user to restart, everything should go back to initial state. maybe just refresh the page?
+                $("#btn-fight").hide()
+                $("#btn-restart").show();
             }
         } else if (player.position == "right") {
             $("#player-right-stat").html(hp);
@@ -90,15 +92,20 @@ $(document).ready(function () {
                 $("#player-right .player img").addClass("grayimg");
                 playerRight = null;
                 // asked user to pick new enemy
+                if (playerLeft.hp > 0) {
+                    $("#btn-fight").hide();
+                    $("#btn-p2").show();
+                }
             } 
         }
+        console.log(charList);
         
     }
 
     // display characters in list
     charList.forEach(function (character) {
         console.log("character added in list: " + this + " name=" + character.name)
-        var charDiv = $('<div/>', { 'class': 'col col-xs-6 col-sm-4 col-md-2' }).append(
+        var charDiv = $('<div/>', { 'class': 'col col-xs-3 col-sm-2 col-md-2' }).append(
             $('<div/>', { 'class': 'card', id: character.name }).append(
                 $('<div/>', { 'class': 'card-header', text: character.name })
             ).append(
@@ -136,7 +143,7 @@ $(document).ready(function () {
             // prompt to pick enemy
             $("#btn-p1").hide();
             $("#btn-p2").show();
-        } else if (playerRight == null) { // second player
+        } else if (playerRight == null && playerLeft.hp > 0) { // second player
             // character stat
             var playerStat = $('<div/>', { id: "player-right-stat" });
             playerStat.append($('<div/>', { id: "player-right-hp-bar" })); // hp
@@ -167,6 +174,9 @@ $(document).ready(function () {
             // setTimeout(function(){ // wait for sound to finish
             //     btn.removeClass("disabled");
             // }, 300);
+            $("#player-left .player img").animate({top: '+=10px'}, 1000);
+            $("#player-left .player img").animate({top: '-=10px'}, 1000);
+            // $("#logo").animate({top: '+=1vh'}, 1000);
             attack(playerLeft, playerRight);
             updateStat(playerLeft);
             updateStat(playerRight);
@@ -175,5 +185,9 @@ $(document).ready(function () {
         }
     });
 
+    // restart
+    $("#btn-restart").on("click", function () {
+        location.reload();
+    });
 
 });

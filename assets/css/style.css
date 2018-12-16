@@ -7,12 +7,24 @@ body {
   min-width: 800px;
 }
 
+header h1 {
+  color: rgb(252, 178, 42);
+  text-shadow: 2px 2px 0px #53dd28, 6px 6px 2px #000000 ;
+  font-family: 'Carter One', 'Acme', sans-serif;;
+}
+
+#character-list {
+  font-family: 'Acme', sans-serif;
+  color: white;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
 
 #character-list .col {
   padding: 5px 5px;
 }
 .card {
   background: rgba(142, 245, 24, 0.6);
+  max-width: 100px;
 }
 .card-body, .card-header, .card-footer {
   padding: 0px 0px;
@@ -27,7 +39,12 @@ body {
   filter: grayscale(1); /* W3C */
 }
 
+#character-list, #playground {
+  min-width: 600px;
+}
+
 #playground {
+  min-width: 600px;
   padding-top: 15px;
   padding-bottom: 15px;
 
@@ -45,8 +62,13 @@ body {
   max-width: 200px;
 }
 
-.player-left-stat, .player-right-stat {
+#player-left-stat, #player-right-stat {
   height: 10vh;
+  background: rgba(196, 245, 105, 0.533);
+  border-radius: 4px;
+
+  font-family: 'Acme', sans-serif;
+  color: black;
 }
 
 #player-left-hp-bar, #player-right-hp-bar {
