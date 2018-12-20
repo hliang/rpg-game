@@ -4,7 +4,7 @@ $(document).ready(function () {
         avatar: "assets/images/mario.png", 
         maxHp: 120,
         hp: 120, 
-        attackPower: 20, 
+        attackPower: 8, 
         counterPower: 10
     };
     var luigi = {
@@ -18,26 +18,26 @@ $(document).ready(function () {
     var toad = {
         name: "Toad", 
         avatar: "assets/images/toad.png", 
-        maxHp: 120,
-        hp: 120, 
+        maxHp: 100,
+        hp: 100, 
         attackPower: 20, 
-        counterPower: 10
+        counterPower: 5
     };
     var yoshi = {
         name: "Yoshi", 
         avatar: "assets/images/yoshi.png", 
-        maxHp: 120,
-        hp: 120, 
-        attackPower: 20, 
-        counterPower: 10
+        maxHp: 150,
+        hp: 150, 
+        attackPower: 15, 
+        counterPower: 20
     };
     var bowser = {
         name: "Bowser", 
         avatar: "assets/images/bowser.png", 
-        maxHp: 120,
-        hp: 120, 
-        attackPower: 20, 
-        counterPower: 10
+        maxHp: 180,
+        hp: 180, 
+        attackPower: 60, 
+        counterPower: 25
     };
     var princess = {
         name: "Princess", 
@@ -48,7 +48,7 @@ $(document).ready(function () {
         counterPower: 10
     };
 
-    var charList = [mario, luigi, toad, yoshi, bowser, princess];
+    var charList = [mario, toad, yoshi, bowser];
     var playerLeft = null;
     var playerRight = null;
     var enemyList = charList;
@@ -60,11 +60,13 @@ $(document).ready(function () {
         // attack
         defender.hp -= offender.attackPower;
         $("#gameinfo-msg").html($("<p>").text(offender.name + " hits for " + offender.attackPower + " damage ⇨"));
-        offender.attackPower += 2;
+        offender.attackPower += 8;
         // counter attack
-        offender.hp -= defender.counterPower;
-        $("#gameinfo-msg").append($("<p>").text("⇦ " + defender.name + " hits for " + defender.attackPower + " damage"));
-        console.log("counter-attack");
+        if (defender.hp > 0) { // if defender is not dead yet
+            offender.hp -= defender.counterPower;
+            $("#gameinfo-msg").append($("<p>").text("⇦ " + defender.name + " hits for " + defender.counterPower + " damage"));
+            console.log("counter-attack");
+        }
         console.log("offender hp=" + offender.hp + " attack=" + offender.attackPower + " backfire=" + offender.counterPower);
         console.log("defender hp=" + defender.hp + " attack=" + defender.attackPower + " backfire=" + defender.counterPower);
     };
@@ -74,20 +76,24 @@ $(document).ready(function () {
         // var hp = "HP: " + player.hp + "/" + player.maxHp;
         // var attackPower = "Dmg: " + player.attackPower;
         var hp = $("<p>").append("HP: " + player.hp + "/" + player.maxHp);
-        var atk = $("<p>").append("Dmg: " + player.attackPower);
         if (player.position == "left") {
+            var atk = $("<p>").append("Dmg: " + player.attackPower);
             $("#player-left-stat").html(hp);
             $("#player-left-stat").append(atk);
             // if character is dead
             if (player.hp <= 0) {
                 $("#player-left .player img").addClass("grayimg");
+                $("#"+player.name).removeClass("card-player");
+                $("#"+player.name).addClass("card-defeated");
                 // playerLeft = null;
                 // ask user to restart, everything should go back to initial state. maybe just refresh the page?
                 $("#btn-fight").hide()
                 $("#btn-restart").show();
-                $("#gameinfo-msg").append($("<p>").text(player.name + " is defeated... GAME OVER!!!"));
+                $("#gameinfo-msg").append($("<p>").text(player.name + " is defeated..."));
+                $("#gameinfo-msg").append($("<p>").text("GAME OVER!!!"));
             }
         } else if (player.position == "right") {
+            var atk = $("<p>").append("Dmg: " + player.counterPower);
             $("#player-right-stat").html(hp);
             $("#player-right-stat").append(atk);  
             // if character is dead 
@@ -96,11 +102,21 @@ $(document).ready(function () {
                 $("#"+player.name).removeClass("card-enemy");
                 $("#"+player.name).addClass("card-defeated");
                 $("#gameinfo-msg").append($("<p>").text(player.name + " is defeated."));
+                // remove character from array
+                var index = charList.indexOf(playerRight);
+                console.log("removing char i=" + index);
+                if (index !== -1) charList.splice(index, 1);
                 playerRight = null;
+                console.log("lalala " + playerLeft.hp + " " + charList.length);
                 // asked user to pick new enemy
-                if (playerLeft.hp > 0) {
+                if (playerLeft.hp > 0 && charList.length > 1) {
                     $("#btn-fight").hide();
                     $("#btn-p2").show();
+                } else if (playerLeft.hp > 0 && charList.length == 1) {
+                    $("#btn-fight").hide();
+                    $("#gameinfo-msg").append($("<p>").text("YOU WIN!"));
+                    $("#gameinfo-msg").append($("<p>").text("GAME OVER!!!"));
+                    $("#btn-restart").show();
                 }
             } 
         }
