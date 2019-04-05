@@ -3,6 +3,8 @@ https://hliang.github.io/rpg-game/
 
 have fun!
 
+<img alt="GameScreenshot" src="./assets/images/game-screenshot.png" width="600">
+
 ## usage
 * Select your character, the rest of characters become your enemies, defeat all of them (sounds anti-social, does it have to be this way?)
 * Select a enemy and click `fight` to start the battle
